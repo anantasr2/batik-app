@@ -5,89 +5,177 @@
 [![GUI](https://img.shields.io/badge/GUI-Tkinter-green)](https://docs.python.org/3/library/tkinter.html)
 [![License](https://img.shields.io/badge/License-CC--BY--SA-lightgrey)](https://creativecommons.org/licenses/by-sa/4.0/)
 
-Aplikasi desktop berbasis *Deep Learning* yang dirancang untuk mengklasifikasikan motif batik Indonesia secara **real-time** lewat kamera perangkat (*webcam*) maupun melalui **unggah gambar manual**. Project ini menggunakan metode *Transfer Learning* dengan arsitektur **MobileNetV2** untuk menghasilkan performa inferensi yang cepat dan efisien pada perangkat desktop dengan sumber daya komputasi terbatas.
+A desktop application based on Deep Learning for real-time Indonesian batik motif classification. The system supports both webcam-based recognition and manual image upload, utilizing Transfer Learning with the MobileNetV2 architecture to provide fast and efficient inference on devices with limited computational resources.
 
-Project ini dikembangkan sebagai bagian dari penelitian ilmiah di **Universitas Dian Nuswantoro** (Fakultas Ilmu Komputer, Program Studi Teknik Informatika) untuk mendukung digitalisasi, identifikasi otomatis, serta pelestarian warisan budaya Indonesia.
-
----
-
-## 🚀 Fitur Utama
-- **Real-Time Classification via Webcam:** Identifikasi motif batik secara langsung melalui kamera secara kontinu.
-- **Manual Image Upload:** Unggah file gambar batik (`.png`, `.jpg`, `.jpeg`) melalui tombol penjelajah (*browse*) untuk langsung diprediksi oleh model.
-- **Interactive GUI (Tkinter):** Antarmuka desktop yang ringan, responsif, dan mudah digunakan oleh pengguna awam.
-- **Model Evaluation Report:** Menyajikan visualisasi laporan performa model (*Confusion Matrix* dan *Classification Report*) langsung di dalam sistem aplikasi.
+This project was developed as part of a research study at **Dian Nuswantoro University**, Faculty of Computer Science, Informatics Engineering Program, with the aim of supporting the digitalization, automatic identification, and preservation of Indonesia's cultural heritage.
 
 ---
 
-## 📊 Dataset & Cakupan Kelas
-Dataset yang digunakan dalam penelitian ini mencakup **4 kategori utama** motif batik Indonesia yang bersumber dari platform Kaggle dengan distribusi data yang seimbang (total 72 citra latih/uji awal):
-1. **Pintu Aceh** (Karakteristik geometris simetris khas Aceh)
-2. **Madura Mataketeran** (Karakteristik elemen repetitif bunga/lengkung warna cerah)
-3. **Maluku Pala** (Karakteristik elemen rempah-rempah Maluku)
-4. **Solo Parang** (Karakteristik pola diagonal khas Jawa Tengah)
+## 🚀 Features
+
+* **Real-Time Classification via Webcam**
+  Detect and classify batik motifs continuously using a webcam.
+
+* **Manual Image Upload**
+  Upload `.png`, `.jpg`, or `.jpeg` images for instant prediction.
+
+* **Interactive Desktop GUI**
+  Lightweight and user-friendly interface developed with Tkinter.
+
+* **Performance Visualization**
+  Display model evaluation metrics including Confusion Matrix and Classification Report.
 
 ---
 
-## 🧠 Metodologi & Arsitektur Model
+## 📊 Dataset
 
-### 1. Pre-processing & Augmentasi Gambar
-- **Resizing:** Dimensi gambar diseragamkan menjadi ukuran `224×224×3` piksel untuk memenuhi standar input arsitektur MobileNetV2.
-- **Data Augmentation:** Untuk mengatasi keterbatasan jumlah dataset dan menghindari *overfitting*, diterapkan teknik augmentasi berupa *Horizontal Flip, Rotation (30°), Zoom Range (0.3), Width/Height Shift (0.3),* dan *Shear Range (0.3)* dengan pengisian area kosong menggunakan metode *Nearest*.
+The dataset consists of four Indonesian batik motif categories collected from Kaggle.
 
-### 2. Arsitektur Deep Learning
-Model memanfaatkan keunggulan *Transfer Learning* dari **MobileNetV2** yang berbasis *depthwise separable convolution* dan *inverted residual block* untuk meminimalkan jumlah parameter tanpa mengorbankan akurasi. Model dikompilasi menggunakan optimizer **Adam** dan fungsi loss **Categorical Crossentropy**.
+| Class                  | Description                                               |
+| ---------------------- | --------------------------------------------------------- |
+| **Pintu Aceh**         | Symmetrical geometric patterns characteristic of Aceh     |
+| **Madura Mataketeran** | Repetitive floral and curved patterns with vibrant colors |
+| **Maluku Pala**        | Motifs inspired by Maluku's spice heritage                |
+| **Solo Parang**        | Diagonal patterns characteristic of Central Java          |
 
----
-
-## 📈 Hasil Evaluasi & Performa Penjajakan
-
-Model mencapai titik optimal pada **Epoch ke-7** dengan metrik performa akhir proses *training*:
-- **Akurasi Validasi Model:** 94%
-- **Loss Validasi:** 0.4032
-
-### Kinerja Pengujian pada Aplikasi Desktop:
-Pengujian dilakukan melalui dua skenario (Statis via unggah gambar dan Real-time via Webcam) untuk melihat stabilitas akurasi sistem di bawah kondisi dunia nyata:
-
-| Kategori Motif Batik | Akurasi (Statis / Upload Gambar) | Akurasi (Real-Time Webcam) |
-| :--- | :---: | :---: |
-| **Solo Parang** | 96% - 98% | 92% - 95% |
-| **Pintu Aceh** | 95% - 97% | 90% |
-| **Maluku Pala** | 93% - 94% | 90% - 92% |
-| **Madura Mataketeran** | 90% - 92% | 89% - 91% |
-
-*Kesimpulan Pengujian:* Metode pengujian statis menghasilkan akurasi yang lebih tinggi karena kualitas citra masukan terkontrol secara digital. Kendati demikian, performa real-time menggunakan webcam tetap tangguh (konsisten di atas 89%) meskipun dihadapkan pada variasi pencahayaan (*noise* lingkungan).
+The initial dataset contains **72 images**, which are distributed into training and testing sets with balanced class proportions.
 
 ---
 
-## 📁 Struktur Folder Project
+## 🧠 Methodology
+
+### Image Preprocessing and Data Augmentation
+
+* Image size normalization to **224 × 224 × 3** pixels.
+* Data augmentation techniques:
+
+  * Horizontal Flip
+  * Rotation (30°)
+  * Zoom Range (0.3)
+  * Width Shift (0.3)
+  * Height Shift (0.3)
+  * Shear Range (0.3)
+
+These techniques help reduce overfitting and improve model generalization.
+
+### Model Architecture
+
+This project employs **Transfer Learning** using **MobileNetV2**, which utilizes:
+
+* Depthwise Separable Convolution
+* Inverted Residual Blocks
+
+The model is compiled using:
+
+* **Optimizer:** Adam
+* **Loss Function:** Categorical Crossentropy
+
+---
+
+## 📈 Model Performance
+
+The best model performance was achieved at **Epoch 7**.
+
+| Metric              |                    Value |
+| ------------------- | -----------------------: |
+| Validation Accuracy |                      94% |
+| Validation Loss     |                   0.4032 |
+| Input Size          |            224 × 224 × 3 |
+| Architecture        |              MobileNetV2 |
+| Optimizer           |                     Adam |
+| Loss Function       | Categorical Crossentropy |
+
+### Application Testing Results
+
+| Batik Motif        | Static Image Accuracy | Real-Time Webcam Accuracy |
+| ------------------ | :-------------------: | :-----------------------: |
+| Solo Parang        |       96% – 98%       |         92% – 95%         |
+| Pintu Aceh         |       95% – 97%       |            90%            |
+| Maluku Pala        |       93% – 94%       |         90% – 92%         |
+| Madura Mataketeran |       90% – 92%       |         89% – 91%         |
+
+**Conclusion:**
+Static image testing generally produces higher accuracy because the image quality is digitally controlled. Nevertheless, real-time webcam classification remains robust, maintaining accuracy above 89% despite variations in lighting conditions and environmental noise.
+
+---
+
+## 📁 Project Structure
+
 ```text
 📦 batik-classification-desktop
 ├── models/
-│   └── model_batik.h5        # File Trained Model berformat H5 (Keras/TensorFlow)
+│   └── model_batik.h5
 ├── app/
-│   ├── app_gui.py            # File utama untuk menjalankan aplikasi antarmuka Tkinter
-│   └── utils.py              # File penunjang untuk preprocessing citra input
+│   ├── app_gui.py
+│   └── utils.py
 ├── docs/
-│   └── Jurnal_Batik.docx     # Dokumen paper penelitian terkait
-├── .gitignore                # Mengabaikan file cache/temporary (*__pycache__*)
-├── requirements.txt          # Daftar library dependency Python
-└── README.md                 # Dokumentasi utama project (file ini)
---
+│   └── Jurnal_Batik.docx
+├── .gitignore
+├── requirements.txt
+└── README.md
+```
 
-## 🛠️ Cara Menjalankan Project di Lokal
+---
 
-### 1. Clone Repository
-Buka Terminal atau Git Bash, lalu jalankan perintah berikut untuk mengunduh kode ke komputermu:
-``bash
-git clone [https://github.com/username-kamu/nama-repo-kamu.git](https://github.com/username-kamu/nama-repo-kamu.git)
-cd nama-repo-kamu
+## 🛠️ Installation
 
-### 2. Install Dependencies
-Pastikan kamu menggunakan Python 3.8 ke atas. Install seluruh library yang dibutuhkan dengan menjalankan perintah:
-``bash
+### Clone Repository
+
+```bash
+git clone https://github.com/your-username/your-repository.git
+cd your-repository
+```
+
+### Install Dependencies
+
+Make sure Python 3.8 or higher is installed.
+
+```bash
 pip install -r requirements.txt
+```
 
-### 3. Jalankan Aplikasi Desktop
-Untuk membuka GUI Tkinter dan mulai melakukan deteksi, jalankan perintah berikut:
-``bash
+---
+
+## ▶️ Usage
+
+Run the desktop application:
+
+```bash
 python app/app_gui.py
+```
+
+---
+
+## 📦 Requirements
+
+* Python 3.8+
+* TensorFlow
+* Keras
+* OpenCV
+* NumPy
+* Pillow
+* Tkinter
+
+Install all dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+## 🎓 Research Context
+
+This work was conducted at:
+
+**Faculty of Computer Science**
+**Informatics Engineering Program**
+**Dian Nuswantoro University**
+
+The project aims to contribute to the preservation and digitalization of Indonesian cultural heritage through computer vision and deep learning technologies.
+
+---
+
+## 📜 License
+
+This project is distributed under the **Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)** License.
